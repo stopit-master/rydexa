@@ -1,0 +1,107 @@
+{
+  "features": [
+    "season",
+    "yr",
+    "mnth",
+    "hr",
+    "holiday",
+    "weekday",
+    "workingday",
+    "weathersit",
+    "temp",
+    "atemp",
+    "hum",
+    "windspeed",
+    "hr_sin",
+    "hr_cos",
+    "mnth_sin",
+    "mnth_cos",
+    "is_commute_peak",
+    "is_adverse_weather",
+    "temp_discomfort"
+  ],
+  "input_ranges": {
+    "season": {
+      "type": "integer",
+      "min": 1,
+      "max": 4,
+      "labels": {
+        "1": "Spring",
+        "2": "Summer",
+        "3": "Fall",
+        "4": "Winter"
+      }
+    },
+    "hr": {
+      "type": "integer",
+      "min": 0,
+      "max": 23,
+      "description": "Hour of the day (0 to 23)"
+    },
+    "holiday": {
+      "type": "integer",
+      "min": 0,
+      "max": 1,
+      "description": "0 = No, 1 = Holiday"
+    },
+    "weekday": {
+      "type": "integer",
+      "min": 0,
+      "max": 6,
+      "labels": {
+        "0": "Sunday",
+        "1": "Monday",
+        "2": "Tuesday",
+        "3": "Wednesday",
+        "4": "Thursday",
+        "5": "Friday",
+        "6": "Saturday"
+      }
+    },
+    "workingday": {
+      "type": "integer",
+      "min": 0,
+      "max": 1,
+      "description": "1 if neither weekend nor holiday, else 0"
+    },
+    "weathersit": {
+      "type": "integer",
+      "min": 1,
+      "max": 4,
+      "labels": {
+        "1": "Clear/Partly Cloudy",
+        "2": "Mist/Cloudy",
+        "3": "Light Snow/Rain",
+        "4": "Heavy Rain/Ice"
+      }
+    },
+    "temp_c": {
+      "type": "float",
+      "min": -10.0,
+      "max": 45.0,
+      "unit": "Celsius",
+      "norm_formula": "temp = (celsius + 8) / 47 or celsius / 41"
+    },
+    "humidity": {
+      "type": "float",
+      "min": 0.0,
+      "max": 100.0,
+      "unit": "%",
+      "norm_formula": "hum = humidity / 100"
+    },
+    "windspeed_kmh": {
+      "type": "float",
+      "min": 0.0,
+      "max": 70.0,
+      "unit": "km/h",
+      "norm_formula": "windspeed = windspeed_kmh / 67"
+    }
+  },
+  "target": "cnt (total hourly rentals)",
+  "excluded_features": [
+    "casual",
+    "registered",
+    "instant",
+    "dteday"
+  ]
+}

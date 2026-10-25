@@ -1,0 +1,235 @@
+{
+  "dataset_summary": {
+    "total_records": 17379,
+    "time_range": "2011-01-01 00:00:00 to 2012-12-31 00:00:00",
+    "total_rentals": 3292679,
+    "mean_hourly_rentals": 189.46,
+    "median_hourly_rentals": 142,
+    "max_hourly_rentals": 977,
+    "std_hourly_rentals": 181.39
+  },
+  "hourly_pattern": [
+    {
+      "hour": 0,
+      "workingday_avg": 36.8,
+      "non_workingday_avg": 90.8,
+      "overall_avg": 53.9
+    },
+    {
+      "hour": 1,
+      "workingday_avg": 16.6,
+      "non_workingday_avg": 69.5,
+      "overall_avg": 33.4
+    },
+    {
+      "hour": 2,
+      "workingday_avg": 8.7,
+      "non_workingday_avg": 53.2,
+      "overall_avg": 22.9
+    },
+    {
+      "hour": 3,
+      "workingday_avg": 4.9,
+      "non_workingday_avg": 25.8,
+      "overall_avg": 11.7
+    },
+    {
+      "hour": 4,
+      "workingday_avg": 5.4,
+      "non_workingday_avg": 8.3,
+      "overall_avg": 6.4
+    },
+    {
+      "hour": 5,
+      "workingday_avg": 24.9,
+      "non_workingday_avg": 8.7,
+      "overall_avg": 19.9
+    },
+    {
+      "hour": 6,
+      "workingday_avg": 102.5,
+      "non_workingday_avg": 18.7,
+      "overall_avg": 76.0
+    },
+    {
+      "hour": 7,
+      "workingday_avg": 290.6,
+      "non_workingday_avg": 43.4,
+      "overall_avg": 212.1
+    },
+    {
+      "hour": 8,
+      "workingday_avg": 477.0,
+      "non_workingday_avg": 105.7,
+      "overall_avg": 359.0
+    },
+    {
+      "hour": 9,
+      "workingday_avg": 241.5,
+      "non_workingday_avg": 171.6,
+      "overall_avg": 219.3
+    },
+    {
+      "hour": 10,
+      "workingday_avg": 135.4,
+      "non_workingday_avg": 255.9,
+      "overall_avg": 173.7
+    },
+    {
+      "hour": 11,
+      "workingday_avg": 158.2,
+      "non_workingday_avg": 315.3,
+      "overall_avg": 208.1
+    },
+    {
+      "hour": 12,
+      "workingday_avg": 200.8,
+      "non_workingday_avg": 366.3,
+      "overall_avg": 253.3
+    },
+    {
+      "hour": 13,
+      "workingday_avg": 198.4,
+      "non_workingday_avg": 372.7,
+      "overall_avg": 253.7
+    },
+    {
+      "hour": 14,
+      "workingday_avg": 183.6,
+      "non_workingday_avg": 364.6,
+      "overall_avg": 240.9
+    },
+    {
+      "hour": 15,
+      "workingday_avg": 201.3,
+      "non_workingday_avg": 358.8,
+      "overall_avg": 251.2
+    },
+    {
+      "hour": 16,
+      "workingday_avg": 293.1,
+      "non_workingday_avg": 352.7,
+      "overall_avg": 312.0
+    },
+    {
+      "hour": 17,
+      "workingday_avg": 525.3,
+      "non_workingday_avg": 323.5,
+      "overall_avg": 461.5
+    },
+    {
+      "hour": 18,
+      "workingday_avg": 492.2,
+      "non_workingday_avg": 281.1,
+      "overall_avg": 425.5
+    },
+    {
+      "hour": 19,
+      "workingday_avg": 348.4,
+      "non_workingday_avg": 231.7,
+      "overall_avg": 311.5
+    },
+    {
+      "hour": 20,
+      "workingday_avg": 249.7,
+      "non_workingday_avg": 174.7,
+      "overall_avg": 226.0
+    },
+    {
+      "hour": 21,
+      "workingday_avg": 186.3,
+      "non_workingday_avg": 142.1,
+      "overall_avg": 172.3
+    },
+    {
+      "hour": 22,
+      "workingday_avg": 138.4,
+      "non_workingday_avg": 116.1,
+      "overall_avg": 131.3
+    },
+    {
+      "hour": 23,
+      "workingday_avg": 88.7,
+      "non_workingday_avg": 85.9,
+      "overall_avg": 87.8
+    }
+  ],
+  "season_pattern": [
+    {
+      "season_id": 1,
+      "season_name": "Spring",
+      "mean_hourly": 111.1,
+      "median_hourly": 76.0,
+      "total_rentals": 471348
+    },
+    {
+      "season_id": 2,
+      "season_name": "Summer",
+      "mean_hourly": 208.3,
+      "median_hourly": 165.0,
+      "total_rentals": 918589
+    },
+    {
+      "season_id": 3,
+      "season_name": "Fall",
+      "mean_hourly": 236.0,
+      "median_hourly": 199.0,
+      "total_rentals": 1061129
+    },
+    {
+      "season_id": 4,
+      "season_name": "Winter",
+      "mean_hourly": 198.9,
+      "median_hourly": 155.5,
+      "total_rentals": 841613
+    }
+  ],
+  "weather_pattern": [
+    {
+      "weathersit_id": 1,
+      "weather_name": "Clear / Partly Cloudy",
+      "mean_hourly": 204.9,
+      "sample_count": 11413
+    },
+    {
+      "weathersit_id": 2,
+      "weather_name": "Mist / Cloudy",
+      "mean_hourly": 175.2,
+      "sample_count": 4544
+    },
+    {
+      "weathersit_id": 3,
+      "weather_name": "Light Snow / Light Rain",
+      "mean_hourly": 111.6,
+      "sample_count": 1419
+    },
+    {
+      "weathersit_id": 4,
+      "weather_name": "Heavy Rain / Ice Pellets",
+      "mean_hourly": 74.3,
+      "sample_count": 3
+    }
+  ],
+  "temperature_pattern": [
+    {
+      "temp_range": "< 10\u00b0C (Cold)",
+      "mean_hourly": 70.0,
+      "sample_count": 2013
+    },
+    {
+      "temp_range": "10\u00b0C - 20\u00b0C (Mild)",
+      "mean_hourly": 144.2,
+      "sample_count": 6316
+    },
+    {
+      "temp_range": "20\u00b0C - 30\u00b0C (Warm/Optimal)",
+      "mean_hourly": 223.0,
+      "sample_count": 6935
+    },
+    {
+      "temp_range": "30\u00b0C+ (Hot)",
+      "mean_hourly": 328.3,
+      "sample_count": 2115
+    }
+  ]
+}

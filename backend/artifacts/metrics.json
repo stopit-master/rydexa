@@ -1,0 +1,50 @@
+{
+  "dataset_name": "UCI Machine Learning Repository - Bike Sharing Dataset (hour.csv)",
+  "source_url": "https://archive.ics.uci.edu/dataset/275/bike+sharing+dataset",
+  "historical_context": "Capital Bikeshare system, Washington D.C., years 2011-2012",
+  "split_strategy": "Chronological (Train: 2011-01-01 to 2012-09-30; Held-out Test: 2012-10-01 to 2012-12-31)",
+  "training_samples": 15211,
+  "test_samples": 2168,
+  "target": "cnt (total hourly rentals)",
+  "champion_model": "Gradient Boosting Regressor",
+  "champion_metrics": {
+    "mae": 40.16,
+    "rmse": 64.57,
+    "r2": 0.8974
+  },
+  "models_evaluated": [
+    {
+      "model_name": "Historical Median Baseline",
+      "mae": 80.87,
+      "rmse": 120.39,
+      "r2": 0.6433,
+      "is_champion": false
+    },
+    {
+      "model_name": "Ridge Regression",
+      "mae": 87.65,
+      "rmse": 116.68,
+      "r2": 0.665,
+      "is_champion": false
+    },
+    {
+      "model_name": "Random Forest Regressor",
+      "mae": 47.59,
+      "rmse": 72.34,
+      "r2": 0.8712,
+      "is_champion": false
+    },
+    {
+      "model_name": "Gradient Boosting Regressor",
+      "mae": 40.16,
+      "rmse": 64.57,
+      "r2": 0.8974,
+      "is_champion": true
+    }
+  ],
+  "disclosures": [
+    "Dataset represents Capital Bikeshare in Washington D.C. (2011-2012), not modern dockless e-bike operations.",
+    "Predictions reflect historical behavioral patterns under given meteorological and calendar conditions.",
+    "Excludes registered and casual sub-counts to eliminate target leakage."
+  ]
+}

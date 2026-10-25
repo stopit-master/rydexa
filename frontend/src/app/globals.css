@@ -1,0 +1,1009 @@
+@import "tailwindcss";
+
+/* ============================================================
+   RYDEXA THEME TOKENS — light (default) / dark (.dark on <html>)
+   ============================================================ */
+:root {
+  --background: #F6F6F2;
+  --surface: #FFFFFF;
+  --surface-alt: #EFEFEA;
+  --surface-card: rgba(255, 255, 255, 0.86);
+  --border: rgba(16, 16, 20, 0.09);
+  --border-strong: rgba(16, 16, 20, 0.20);
+  --border-focus: rgba(120, 168, 12, 0.75);
+  --foreground: #16161A;
+  --muted: #63636A;
+  --muted-strong: #414147;
+  --electric-lime: #C2F84F;
+  --electric-lime-glow: rgba(194, 248, 79, 0.35);
+  --electric-lime-dark: #6F9410;
+  --charcoal: #121214;
+  --charcoal-hover: #2A2A2E;
+  --shadow-color: rgba(0, 0, 0, 0.08);
+  --globe-glow: rgba(84, 104, 44, 0.14);
+  --chart-primary: #26262b;
+  --chart-accent: #6f9410;
+  --chart-accent-strong: #557a08;
+  --cta-primary-bg: #141416;
+  --cta-primary-bg-hover: #1e1e21;
+  --cta-primary-fg: #FAFAF7;
+  --cta-primary-border: rgba(255, 255, 255, 0.14);
+  --cta-secondary-bg: rgba(255, 255, 255, 0.72);
+  --cta-secondary-bg-hover: #FFFFFF;
+  --cta-secondary-fg: #16161A;
+  --cta-shadow: 0 1px 1px rgba(0, 0, 0, 0.04), 0 14px 30px -20px rgba(0, 0, 0, 0.38);
+  color-scheme: light;
+}
+
+.dark {
+  --background: #000000;
+  --surface: #08080A;
+  --surface-alt: #101013;
+  --surface-card: rgba(9, 9, 11, 0.74);
+  --border: rgba(255, 255, 255, 0.09);
+  --border-strong: rgba(255, 255, 255, 0.22);
+  --border-focus: rgba(194, 248, 79, 0.65);
+  --foreground: #F7F7F8;
+  --muted: #9A9AA2;
+  --muted-strong: #C9C9D0;
+  --electric-lime: #C2F84F;
+  --electric-lime-glow: rgba(194, 248, 79, 0.30);
+  --electric-lime-dark: #D6FF6B;
+  --charcoal: #17171A;
+  --charcoal-hover: #26262B;
+  --shadow-color: rgba(0, 0, 0, 0.55);
+  --globe-glow: rgba(194, 248, 79, 0.09);
+  --chart-primary: #e7e7e3;
+  --chart-accent: #c2f84f;
+  --chart-accent-strong: #d4ff6b;
+  --cta-primary-bg: #F4F4EF;
+  --cta-primary-bg-hover: #FFFFFF;
+  --cta-primary-fg: #0B0B0D;
+  --cta-primary-border: rgba(255, 255, 255, 0.55);
+  --cta-secondary-bg: rgba(16, 16, 19, 0.72);
+  --cta-secondary-bg-hover: #17171B;
+  --cta-secondary-fg: #F7F7F8;
+  --cta-shadow: 0 1px 1px rgba(0, 0, 0, 0.45), 0 18px 36px -22px rgba(0, 0, 0, 0.9);
+  color-scheme: dark;
+}
+
+/* Tailwind v4: re-point the neutral ramp so un-mapped gray utilities
+   (e.g. ring-neutral-*, divide-*) stay readable in dark mode. */
+.dark {
+  --color-neutral-50: #1A1A1C;
+  --color-neutral-100: #232327;
+  --color-neutral-200: #2E2E33;
+  --color-neutral-300: #3A3A41;
+  --color-neutral-400: #8E8E96;
+  --color-neutral-500: #A1A1A8;
+  --color-neutral-600: #B8B8C0;
+  --color-neutral-700: #CFCFD6;
+}
+
+html {
+  scroll-behavior: smooth;
+  scroll-padding-top: 6rem;
+  font-feature-settings: "cv02", "cv03", "cv04", "cv11";
+}
+
+body {
+  background-color: var(--background);
+  color: var(--foreground);
+  font-family: -apple-system, BlinkMacSystemFont, "SF Pro Display", "SF Pro Text", "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  overflow-x: hidden;
+}
+
+/* Smooth cross-fade while toggling themes (class applied temporarily) */
+html.theme-animating,
+html.theme-animating *,
+html.theme-animating *::before,
+html.theme-animating *::after {
+  transition: background-color 320ms ease, border-color 320ms ease,
+    color 320ms ease, fill 320ms ease, stroke 320ms ease,
+    box-shadow 320ms ease !important;
+  transition-delay: 0s !important;
+}
+
+/* Restrained electric lime badge and glow effects */
+.lime-glow {
+  box-shadow: 0 0 20px -3px var(--electric-lime-glow);
+}
+
+.lime-glow-subtle {
+  box-shadow: 0 0 12px -2px rgba(194, 248, 79, 0.2);
+}
+
+.frosted-glass {
+  background: var(--surface-card);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  border: 1px solid var(--border);
+}
+
+.frosted-glass-dark {
+  background: rgba(18, 18, 20, 0.92);
+  backdrop-filter: blur(24px);
+  -webkit-backdrop-filter: blur(24px);
+  border: 1px solid rgba(255, 255, 255, 0.12);
+}
+
+/* Navbar surface: opaque enough that hero content scrolling underneath never
+   bleeds through as faint text, while keeping the frosted premium treatment. */
+.nav-glass {
+  background: rgba(250, 250, 247, 0.94);
+  backdrop-filter: blur(22px) saturate(115%);
+  border: 1px solid var(--border);
+  box-shadow: 0 12px 30px -22px rgba(10, 10, 12, 0.3);
+}
+
+.dark .nav-glass {
+  background: rgba(9, 9, 11, 0.92);
+  border-color: rgba(255, 255, 255, 0.1);
+  box-shadow: 0 18px 40px -26px rgba(0, 0, 0, 0.9);
+}
+
+/* Custom minimal slider styling */
+input[type="range"] {
+  accent-color: var(--electric-lime);
+}
+
+/* Reduced motion: pause looping CSS animation unless the user explicitly
+   enabled full motion from the navbar (html.motion-full). Content is never
+   hidden by this rule. */
+@media (prefers-reduced-motion: reduce) {
+  html:not(.motion-full) *,
+  html:not(.motion-full) ::before,
+  html:not(.motion-full) ::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    scroll-behavior: auto !important;
+  }
+}
+
+/* Explicit effects off: stop only the continuous decorative loops, even on
+   systems that do not advertise a reduced-motion preference. The staircase
+   preloader, page entrance and one-shot reveals are deliberately untouched so
+   the page still loads and reveals itself normally. */
+html.motion-off .logo-mark,
+html.motion-off .logo-mark::after,
+html.motion-off .spectral-band,
+html.motion-off .spectral-veil {
+  animation-name: none !important;
+}
+
+html.motion-off .spectral-pointer {
+  opacity: 0 !important;
+}
+
+html.motion-off .hero-emphasis-sheen {
+  animation: none;
+}
+
+/* Page entrance: a gentle zoom-in from 96.5% with a short lift. Base state is
+   fully visible, so a failed/finished animation can never leave content
+   invisible. */
+@keyframes rydexa-page-enter {
+  from {
+    opacity: 0.85;
+    transform: scale(0.97) translateY(14px);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1) translateY(0);
+  }
+}
+
+@keyframes rydexa-page-fade {
+  from {
+    opacity: 0.85;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+.page-enter {
+  transform-origin: 50% 8%;
+}
+
+/* Starts after the staircase preloader lifts away, so the zoom is actually
+   seen. Without JS (class never added) the page is simply visible. */
+html.rydexa-revealed .page-enter {
+  animation: rydexa-page-enter 720ms cubic-bezier(0.16, 1, 0.3, 1) backwards;
+}
+
+/* ============================================================
+   ROUTE TRANSITION — App Router template entry.
+   The wrapper only fades; the scale is applied to the route's
+   own content box so fixed navbar/backdrop layers keep their
+   viewport containing block.
+   ============================================================ */
+@keyframes rydexa-route-fade {
+  from {
+    opacity: 0.35;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+@keyframes rydexa-route-zoom {
+  from {
+    opacity: 0.55;
+    transform: scale(0.985) translateY(10px);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1) translateY(0);
+  }
+}
+
+.route-transition {
+  animation: rydexa-route-fade 300ms ease-out backwards;
+}
+
+.route-transition main,
+.route-transition [data-route-view] {
+  transform-origin: 50% 12%;
+  animation: rydexa-route-zoom 340ms cubic-bezier(0.16, 1, 0.3, 1) backwards;
+}
+
+/* A route change must not replay the preloader-gated home entrance. */
+.route-transition .page-enter {
+  animation: none !important;
+}
+
+/* Home's <main> carries .page-enter. On client navigation it must still get
+   the route zoom, so this later !important rule replaces the suppression
+   above with the transition animation (never both at once). */
+.route-transition main.page-enter,
+.route-transition [data-route-view].page-enter {
+  animation: rydexa-route-zoom 340ms cubic-bezier(0.16, 1, 0.3, 1) backwards !important;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html:not(.motion-full) .route-transition,
+  html:not(.motion-full) .route-transition main,
+  html:not(.motion-full) .route-transition [data-route-view] {
+    animation: rydexa-route-fade 220ms ease-out backwards;
+  }
+
+  html:not(.motion-full) .route-transition main,
+  html:not(.motion-full) .route-transition [data-route-view] {
+    transform: none;
+  }
+
+  html:not(.motion-full) .route-transition main.page-enter,
+  html:not(.motion-full) .route-transition [data-route-view].page-enter {
+    animation: rydexa-route-fade 220ms ease-out backwards !important;
+    transform: none;
+  }
+}
+
+/* Modal / popup entrance — zooms in from just under full size. */
+@keyframes rydexa-pop {
+  from {
+    opacity: 0;
+    transform: scale(0.92) translateY(10px);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1) translateY(0);
+  }
+}
+
+@keyframes rydexa-fade {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+.rydexa-pop {
+  animation: rydexa-pop 420ms cubic-bezier(0.16, 1, 0.3, 1) backwards;
+}
+
+.rydexa-fade {
+  animation: rydexa-fade 240ms ease-out backwards;
+}
+
+/* Success burst dots radiate once from the check mark. */
+@keyframes rydexa-burst {
+  0% {
+    opacity: 0;
+    transform: translate(0, 0) scale(0.4);
+  }
+  25% {
+    opacity: 1;
+  }
+  100% {
+    opacity: 0;
+    transform: translate(var(--burst-x), var(--burst-y)) scale(1);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html:not(.motion-full) .rydexa-pop,
+  html:not(.motion-full) .rydexa-fade {
+    animation-duration: 1ms;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html.rydexa-revealed:not(.motion-full) .page-enter {
+    /* Reduced motion: gentle opacity fade, no scale. `!important` also
+       overrides the global reduced-motion duration clamp above. */
+    animation: rydexa-page-fade 340ms ease-out backwards !important;
+  }
+}
+
+/* ============================================================
+   SECTION HEADINGS — shared tilt spotlight + lime rule.
+   ============================================================ */
+.section-heading-tilt {
+  perspective: 900px;
+}
+
+.section-heading__spot {
+  position: absolute;
+  /* Horizontal bleed is capped in px: a percentage inset pushed the glow past
+     the viewport on wide sections and inflated document scrollWidth. */
+  inset: -35% -12px;
+  z-index: 0;
+  background: radial-gradient(
+    circle at var(--heading-x, 50%) 55%,
+    rgba(194, 248, 79, 0.18) 0%,
+    rgba(194, 248, 79, 0.06) 34%,
+    transparent 66%
+  );
+  opacity: 0.55;
+  pointer-events: none;
+  transition: opacity 300ms ease;
+}
+
+.section-heading-tilt:hover .section-heading__spot {
+  opacity: 1;
+}
+
+.section-heading__rule {
+  display: block;
+  width: min(8.5rem, 45%);
+  height: 2px;
+  border-radius: 999px;
+  background: linear-gradient(
+    90deg,
+    transparent 0%,
+    rgba(194, 248, 79, 0.15) 12%,
+    var(--electric-lime) 50%,
+    rgba(194, 248, 79, 0.15) 88%,
+    transparent 100%
+  );
+  box-shadow: 0 0 14px -4px rgba(194, 248, 79, 0.8);
+}
+
+html.motion-off .section-heading__spot {
+  opacity: 0.35;
+}
+
+@media (hover: none), (pointer: coarse) {
+  .section-heading__spot {
+    opacity: 0.3;
+  }
+}
+
+/* ============================================================
+   COLAB PIPELINE CARD — liquid glass, pointer perspective.
+   ============================================================ */
+.colab-glass {
+  --colab-rx: 0deg;
+  --colab-ry: 0deg;
+  --colab-x: 50%;
+  --colab-y: 50%;
+  background:
+    linear-gradient(
+      138deg,
+      rgba(255, 255, 255, 0.78) 0%,
+      rgba(255, 255, 255, 0.46) 42%,
+      rgba(194, 248, 79, 0.10) 100%
+    );
+  -webkit-backdrop-filter: blur(24px) saturate(118%);
+  backdrop-filter: blur(24px) saturate(118%);
+  box-shadow:
+    inset 0 1px 0 rgba(255, 255, 255, 0.72),
+    inset 0 -1px 0 rgba(255, 255, 255, 0.22),
+    0 30px 70px -46px rgba(12, 12, 16, 0.55);
+}
+
+.dark .colab-glass {
+  background:
+    linear-gradient(
+      138deg,
+      rgba(23, 23, 27, 0.82) 0%,
+      rgba(12, 12, 15, 0.68) 48%,
+      rgba(194, 248, 79, 0.07) 100%
+    );
+  box-shadow:
+    inset 0 1px 0 rgba(255, 255, 255, 0.07),
+    inset 0 -1px 0 rgba(255, 255, 255, 0.03),
+    0 34px 80px -48px rgba(0, 0, 0, 0.95);
+}
+
+.colab-glass__inner {
+  transform: perspective(1400px) rotateX(var(--colab-rx)) rotateY(var(--colab-ry));
+  transform-style: preserve-3d;
+  transition: transform 650ms cubic-bezier(0.22, 1.15, 0.36, 1);
+}
+
+.colab-glass:hover .colab-glass__inner {
+  transition-duration: 180ms;
+}
+
+.colab-glass__aura {
+  position: absolute;
+  inset: -25%;
+  background: radial-gradient(
+    circle at var(--colab-x) var(--colab-y),
+    rgba(194, 248, 79, 0.18) 0%,
+    rgba(70, 186, 255, 0.08) 24%,
+    transparent 52%
+  );
+  opacity: 0.8;
+  pointer-events: none;
+  transition: opacity 350ms ease;
+}
+
+.colab-glass__mesh {
+  position: absolute;
+  inset: 0;
+  background-image:
+    linear-gradient(to right, rgba(16, 16, 20, 0.045) 1px, transparent 1px),
+    linear-gradient(to bottom, rgba(16, 16, 20, 0.045) 1px, transparent 1px);
+  background-size: 42px 42px;
+  -webkit-mask-image: radial-gradient(ellipse 78% 70% at 72% 22%, #000 0%, transparent 76%);
+  mask-image: radial-gradient(ellipse 78% 70% at 72% 22%, #000 0%, transparent 76%);
+  opacity: 0.6;
+  pointer-events: none;
+}
+
+.dark .colab-glass__mesh {
+  background-image:
+    linear-gradient(to right, rgba(255, 255, 255, 0.05) 1px, transparent 1px),
+    linear-gradient(to bottom, rgba(255, 255, 255, 0.05) 1px, transparent 1px);
+}
+
+@media (hover: none), (pointer: coarse) {
+  .colab-glass__inner {
+    transform: none;
+  }
+
+  .colab-glass__aura {
+    opacity: 0.45;
+  }
+}
+
+html.motion-off .colab-glass__inner {
+  transform: none !important;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html:not(.motion-full) .colab-glass__inner {
+    transform: none !important;
+  }
+}
+
+/* ============================================================
+   FOCUS — one accessible, high-contrast indicator everywhere.
+   ============================================================ */
+:where(a, button, input, select, textarea, summary, [tabindex]):focus-visible {
+  outline: 2px solid var(--electric-lime);
+  outline-offset: 3px;
+  border-radius: 6px;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html:not(.motion-full) :where(a, button, input, select, textarea, summary, [tabindex]):focus-visible {
+    outline-color: var(--foreground);
+  }
+}
+
+/* Section anchors clear the floating navbar. */
+[id] {
+  scroll-margin-top: 6.5rem;
+}
+
+/* ============================================================
+   NAVBAR BRAND — slow lime sweep + very soft breathing glow.
+   Compositor-only (transform/opacity/box-shadow), no layout work.
+   ============================================================ */
+@keyframes logo-sheen {
+  0%,
+  52% {
+    opacity: 0;
+    transform: translateX(-140%) skewX(-16deg);
+  }
+  60% {
+    opacity: 0.9;
+  }
+  72%,
+  100% {
+    opacity: 0;
+    transform: translateX(150%) skewX(-16deg);
+  }
+}
+
+@keyframes logo-glow {
+  0%,
+  100% {
+    box-shadow: 0 0 0 1px rgba(194, 248, 79, 0.16), 0 0 10px -6px rgba(194, 248, 79, 0.5);
+  }
+  50% {
+    box-shadow: 0 0 0 1px rgba(194, 248, 79, 0.4), 0 0 17px -4px rgba(194, 248, 79, 0.55);
+  }
+}
+
+.logo-mark {
+  animation: logo-glow 7.5s ease-in-out infinite;
+}
+
+.logo-mark::after {
+  content: '';
+  position: absolute;
+  top: -40%;
+  bottom: -40%;
+  left: 0;
+  width: 55%;
+  background: linear-gradient(
+    105deg,
+    transparent 0%,
+    rgba(194, 248, 79, 0.08) 28%,
+    rgba(226, 255, 168, 0.6) 50%,
+    rgba(194, 248, 79, 0.08) 72%,
+    transparent 100%
+  );
+  animation: logo-sheen 7.5s cubic-bezier(0.4, 0, 0.2, 1) infinite;
+  pointer-events: none;
+}
+
+/* ============================================================
+   HERO HEADLINE — pointer tilt + moving sheen
+   ============================================================ */
+.hero-headline-wrap {
+  --hero-rx: 0deg;
+  --hero-ry: 0deg;
+  --hero-tx: 0px;
+  --hero-ty: 0px;
+  --hero-sheen: 50%;
+  perspective: 1000px;
+}
+
+.hero-headline {
+  transform: rotateX(var(--hero-rx)) rotateY(var(--hero-ry))
+    translate3d(var(--hero-tx), var(--hero-ty), 0);
+  transform-style: preserve-3d;
+  backface-visibility: hidden;
+  transition: transform 700ms cubic-bezier(0.22, 1.3, 0.36, 1);
+}
+
+.hero-headline-wrap.is-tilting .hero-headline {
+  transition-duration: 180ms;
+  transition-timing-function: cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+.hero-emphasis-sheen {
+  background-image: linear-gradient(
+    104deg,
+    transparent 30%,
+    rgba(194, 248, 79, 0.32) 48%,
+    rgba(214, 255, 140, 0.18) 55%,
+    transparent 72%
+  );
+  background-size: 260% 100%;
+  background-repeat: no-repeat;
+  background-position: var(--hero-sheen) 50%;
+  opacity: 0.5;
+  border-radius: 3px;
+  transition: background-position 700ms cubic-bezier(0.22, 1.3, 0.36, 1);
+  animation: hero-sheen-in 1250ms cubic-bezier(0.16, 1, 0.3, 1) 380ms backwards;
+}
+
+@keyframes hero-sheen-in {
+  from {
+    background-position: 88% 50%;
+    opacity: 0;
+  }
+  40% {
+    opacity: 0.8;
+  }
+  to {
+    background-position: 50% 50%;
+    opacity: 0.5;
+  }
+}
+
+.hero-headline-wrap.is-tilting .hero-emphasis-sheen {
+  transition-duration: 200ms;
+  transition-timing-function: cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html:not(.motion-full) .hero-headline,
+  html:not(.motion-full) .hero-emphasis-sheen {
+    transition: none;
+  }
+}
+
+/* ============================================================
+   HERO CTAs — charcoal / white premium surfaces, lime accents.
+   One directional sheen on hover; no looping animation.
+   ============================================================ */
+.btn-hero {
+  --cta-sheen: rgba(194, 248, 79, 0.12);
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.75rem;
+  min-height: 3.25rem;
+  padding: 0.85rem 1.5rem;
+  border-radius: 0.9rem;
+  border: 1px solid transparent;
+  font-size: 0.875rem;
+  font-weight: 600;
+  letter-spacing: -0.01em;
+  line-height: 1;
+  isolation: isolate;
+  overflow: hidden;
+  will-change: transform;
+  transition: transform 220ms cubic-bezier(0.16, 1, 0.3, 1),
+    box-shadow 220ms ease, background-color 220ms ease, border-color 220ms ease;
+}
+
+.btn-hero::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  background: linear-gradient(100deg, transparent 20%, var(--cta-sheen) 46%, transparent 64%);
+  transform: translateX(-120%);
+  transition: transform 650ms cubic-bezier(0.16, 1, 0.3, 1);
+  pointer-events: none;
+}
+
+.btn-hero:hover::after {
+  transform: translateX(120%);
+}
+
+.btn-hero:hover {
+  transform: translateY(-2px);
+}
+
+.btn-hero:active {
+  transform: translateY(0) scale(0.99);
+  transition-duration: 80ms;
+}
+
+.btn-hero--primary {
+  background: var(--cta-primary-bg);
+  color: var(--cta-primary-fg);
+  border-color: var(--cta-primary-border);
+  box-shadow: var(--cta-shadow), inset 0 1px 0 rgba(255, 255, 255, 0.12);
+}
+
+.btn-hero--primary:hover {
+  background: var(--cta-primary-bg-hover);
+  border-color: rgba(194, 248, 79, 0.48);
+  box-shadow: 0 1px 1px rgba(0, 0, 0, 0.04), 0 20px 38px -24px rgba(0, 0, 0, 0.6),
+    0 0 0 1px rgba(194, 248, 79, 0.14);
+}
+
+.dark .btn-hero--primary {
+  box-shadow: var(--cta-shadow), inset 0 1px 0 rgba(255, 255, 255, 0.75);
+}
+
+.btn-hero--secondary {
+  background: var(--cta-secondary-bg);
+  color: var(--cta-secondary-fg);
+  border-color: var(--border-strong);
+  -webkit-backdrop-filter: blur(14px);
+  backdrop-filter: blur(14px);
+  box-shadow: var(--cta-shadow);
+}
+
+.btn-hero--secondary:hover {
+  background: var(--cta-secondary-bg-hover);
+  border-color: rgba(111, 148, 16, 0.55);
+}
+
+.dark .btn-hero--secondary:hover {
+  border-color: rgba(194, 248, 79, 0.42);
+}
+
+.btn-hero__icon {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 1.6rem;
+  height: 1.6rem;
+  flex: none;
+  border-radius: 999px;
+  background: #c2f84f;
+  color: #0a0a0a;
+  transition: transform 260ms cubic-bezier(0.16, 1, 0.3, 1), background-color 220ms ease;
+}
+
+.btn-hero--primary:hover .btn-hero__icon {
+  transform: translate(2px, -2px) rotate(6deg);
+}
+
+.btn-hero:active .btn-hero__icon {
+  transform: scale(0.94);
+}
+
+.btn-hero__icon--ghost {
+  background: transparent;
+  color: var(--electric-lime-dark);
+  border: 1px solid var(--border);
+}
+
+.btn-hero--secondary:hover .btn-hero__icon--ghost {
+  transform: translateX(2px);
+  background: rgba(194, 248, 79, 0.12);
+  border-color: rgba(194, 248, 79, 0.45);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html:not(.motion-full) .btn-hero,
+  html:not(.motion-full) .btn-hero::after,
+  html:not(.motion-full) .btn-hero__icon {
+    transition-duration: 1ms !important;
+  }
+
+  html:not(.motion-full) .btn-hero:hover {
+    transform: none;
+  }
+}
+
+/* ============================================================
+   DARK THEME — spectral light bands (compositor-only transforms)
+   ============================================================ */
+@keyframes spectral-drift {
+  0% {
+    transform: translate3d(-22vw, 2vh, 0) rotate(21deg) scaleY(0.9) skewX(-1.5deg);
+    opacity: 0.38;
+  }
+  50% {
+    transform: translate3d(6vw, -3vh, 0) rotate(25deg) scaleY(1.05) skewX(1.5deg);
+    opacity: 0.78;
+  }
+  100% {
+    transform: translate3d(32vw, 7vh, 0) rotate(19deg) scaleY(1.16) skewX(-1deg);
+    opacity: 0.46;
+  }
+}
+
+@keyframes spectral-pulse {
+  0%, 100% { opacity: 0.35; }
+  50% { opacity: 0.7; }
+}
+
+.spectral-stage {
+  position: absolute;
+  inset: -25%;
+  filter: blur(58px) saturate(145%);
+  opacity: 0.72;
+  transform: translate3d(0, 0, 0);
+  transition: transform 420ms cubic-bezier(0.16, 1, 0.3, 1);
+  will-change: transform;
+}
+
+.spectral-band {
+  position: absolute;
+  top: -30%;
+  height: 165%;
+  width: 16vw;
+  min-width: 120px;
+  border-radius: 999px;
+  mix-blend-mode: screen;
+  will-change: transform, opacity;
+  animation: spectral-drift 34s cubic-bezier(0.45, 0, 0.55, 1) infinite alternate;
+}
+
+.spectral-band--violet {
+  left: 12%;
+  background: linear-gradient(180deg, transparent 4%, rgba(126, 84, 255, 0.34) 34%, rgba(88, 74, 240, 0.20) 62%, transparent 96%);
+}
+
+.spectral-band--cyan {
+  left: 34%;
+  width: 10vw;
+  background: linear-gradient(180deg, transparent 6%, rgba(70, 186, 255, 0.30) 38%, rgba(64, 226, 219, 0.18) 66%, transparent 96%);
+}
+
+.spectral-band--lime {
+  left: 55%;
+  width: 12vw;
+  background: linear-gradient(180deg, transparent 4%, rgba(194, 248, 79, 0.28) 40%, rgba(120, 220, 120, 0.14) 70%, transparent 96%);
+}
+
+.spectral-band--magenta {
+  left: 76%;
+  width: 9vw;
+  background: linear-gradient(180deg, transparent 6%, rgba(255, 96, 190, 0.22) 42%, rgba(150, 90, 255, 0.16) 68%, transparent 96%);
+}
+
+.spectral-band--warm {
+  left: 3%;
+  width: 7vw;
+  background: linear-gradient(180deg, transparent 8%, rgba(255, 170, 90, 0.16) 45%, transparent 92%);
+}
+
+.spectral-veil {
+  background:
+    radial-gradient(ellipse 60% 45% at 50% 0%, rgba(194, 248, 79, 0.055), transparent 70%),
+    radial-gradient(ellipse 70% 50% at 18% 80%, rgba(98, 84, 255, 0.06), transparent 72%);
+  animation: spectral-pulse 18s ease-in-out infinite;
+}
+
+/* Fine static grid, faded toward the edges so text stays crisp. */
+.spectral-grid {
+  position: absolute;
+  inset: 0;
+  background-image:
+    linear-gradient(to right, rgba(255, 255, 255, 0.038) 1px, transparent 1px),
+    linear-gradient(to bottom, rgba(255, 255, 255, 0.038) 1px, transparent 1px);
+  background-size: 64px 64px;
+  -webkit-mask-image: radial-gradient(ellipse 82% 72% at 50% 34%, #000 18%, transparent 78%);
+  mask-image: radial-gradient(ellipse 82% 72% at 50% 34%, #000 18%, transparent 78%);
+  opacity: 0.75;
+}
+
+/* Restrained lime light that eases toward the pointer (transform only). */
+.spectral-pointer {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 720px;
+  height: 720px;
+  margin: -360px 0 0 -360px;
+  border-radius: 9999px;
+  background: radial-gradient(
+    circle,
+    rgba(194, 248, 79, 0.15) 0%,
+    rgba(194, 248, 79, 0.07) 36%,
+    rgba(194, 248, 79, 0) 68%
+  );
+  opacity: 0;
+  transform: translate3d(0, 0, 0);
+  transition: opacity 450ms ease;
+  will-change: transform, opacity;
+  pointer-events: none;
+}
+
+@media (max-width: 640px) {
+  .spectral-grid {
+    background-size: 46px 46px;
+  }
+
+  .spectral-pointer {
+    width: 460px;
+    height: 460px;
+    margin: -230px 0 0 -230px;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html:not(.motion-full) .spectral-band,
+  html:not(.motion-full) .spectral-veil {
+    animation: none;
+    opacity: 0.5;
+  }
+}
+
+/* Dark scrollbar so the pure-black canvas stays coherent. */
+.dark {
+  scrollbar-color: #2a2a2e #000000;
+}
+
+.dark ::selection {
+  background: var(--electric-lime);
+  color: #0a0a0a;
+}
+
+
+
+/* ============================================================
+   FOOTER — restrained scroll reveal + multicolour light wave.
+   Both are progressive enhancements: without support (or with
+   reduced motion) the footer is simply visible and static.
+   ============================================================ */
+@keyframes rydexa-footer-reveal {
+  from {
+    opacity: 0.55;
+    transform: translateY(26px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@supports (animation-timeline: view()) {
+  .footer-reveal {
+    animation: rydexa-footer-reveal 1ms linear both;
+    animation-timeline: view();
+    animation-range: entry 6% cover 32%;
+  }
+}
+
+/* Layered liquid finale. Each layer is a static SVG edge moved by Motion;
+   the work stays on transform/opacity, and no animation loop runs. */
+.footer-liquid {
+  position: relative;
+  height: clamp(150px, 19vw, 230px);
+  overflow: hidden;
+  isolation: isolate;
+  background: linear-gradient(to bottom, transparent 0%, rgba(194, 248, 79, 0.025) 100%);
+}
+
+.footer-liquid__layer {
+  position: absolute;
+  inset: 0;
+  transform-origin: 50% 100%;
+  will-change: transform, opacity;
+  pointer-events: none;
+}
+
+.footer-liquid__layer svg {
+  display: block;
+  width: 100%;
+  height: 100%;
+}
+
+.footer-liquid__layer--back {
+  z-index: 1;
+  filter: blur(18px) saturate(120%);
+  opacity: 0.8;
+}
+
+.footer-liquid__layer--mid {
+  z-index: 2;
+  filter: blur(8px) saturate(126%);
+}
+
+.footer-liquid__layer--front {
+  z-index: 3;
+  filter: blur(0.5px);
+}
+
+.footer-liquid__scrim {
+  position: absolute;
+  inset: 0 0 auto 0;
+  height: 42%;
+  z-index: 4;
+  background: linear-gradient(to bottom, var(--surface) 0%, transparent 100%);
+  opacity: 0.55;
+  pointer-events: none;
+}
+
+.footer-liquid__haze {
+  position: absolute;
+  inset: auto 0 0 0;
+  height: 58%;
+  z-index: 4;
+  background: linear-gradient(
+    to bottom,
+    transparent 0%,
+    rgba(194, 248, 79, 0.06) 48%,
+    rgba(0, 0, 0, 0.10) 100%
+  );
+  pointer-events: none;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html:not(.motion-full) .footer-reveal {
+    animation: none;
+  }
+}
