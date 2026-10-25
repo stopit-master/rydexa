@@ -22,9 +22,9 @@ export async function checkHealth(): Promise<HealthResponse> {
       throw new ApiError(`Health check failed with status: ${res.status}`, res.status);
     }
     return await res.json();
-  } catch (error: any) {
+  } catch (error: unknown) {
     if (error instanceof ApiError) throw error;
-    throw new ApiError(error?.message || 'Unable to establish connection to the FastAPI backend.');
+    throw new ApiError((error instanceof Error && error.message) || 'Unable to establish connection to the FastAPI backend.');
   }
 }
 
@@ -45,7 +45,7 @@ export async function predictDemand(payload: PredictionRequest): Promise<Predict
         const errorData = await res.json();
         if (errorData.detail) {
           errorMsg = Array.isArray(errorData.detail)
-            ? errorData.detail.map((d: any) => `${d.loc?.join('.')}: ${d.msg}`).join(', ')
+            ? errorData.detail.map((d: { loc?: (string | number)[]; msg?: string }) => `${d.loc?.join('.')}: ${d.msg}`).join(', ')
             : errorData.detail;
         }
       } catch {
@@ -55,9 +55,9 @@ export async function predictDemand(payload: PredictionRequest): Promise<Predict
     }
 
     return await res.json();
-  } catch (error: any) {
+  } catch (error: unknown) {
     if (error instanceof ApiError) throw error;
-    throw new ApiError(error?.message || 'Connection error: Unable to reach inference server.');
+    throw new ApiError((error instanceof Error && error.message) || 'Connection error: Unable to reach inference server.');
   }
 }
 
@@ -74,9 +74,9 @@ export async function fetchModelMetrics(): Promise<ModelMetricsResponse> {
     }
 
     return await res.json();
-  } catch (error: any) {
+  } catch (error: unknown) {
     if (error instanceof ApiError) throw error;
-    throw new ApiError(error?.message || 'Could not load held-out evaluation metrics from server.');
+    throw new ApiError((error instanceof Error && error.message) || 'Could not load held-out evaluation metrics from server.');
   }
 }
 
@@ -93,8 +93,8 @@ export async function fetchAnalytics(): Promise<AnalyticsSummary> {
     }
 
     return await res.json();
-  } catch (error: any) {
+  } catch (error: unknown) {
     if (error instanceof ApiError) throw error;
-    throw new ApiError(error?.message || 'Could not load dataset analytics from server.');
+    throw new ApiError((error instanceof Error && error.message) || 'Could not load dataset analytics from server.');
   }
 }

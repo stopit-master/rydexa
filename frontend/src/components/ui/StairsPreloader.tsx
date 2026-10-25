@@ -1,6 +1,6 @@
 'use client';
 
-import React, { useEffect, useRef, useState } from 'react';
+import React, { useEffect, useRef, useState, useSyncExternalStore } from 'react';
 import { usePathname } from 'next/navigation';
 import { motion } from 'motion/react';
 import { isFullMotion } from '@/lib/motionPreference';
@@ -11,6 +11,8 @@ const EASE_STAIRS: [number, number, number, number] = [0.76, 0, 0.24, 1];
 const ENTER_MS = 1500;
 const DONE_MS = 2850;
 const HARD_LIMIT_MS = 3600;
+
+const noopSubscribe = () => () => {};
 
 /**
  * Skiper9-inspired staircase preloader.
@@ -31,12 +33,12 @@ export const StairsPreloader: React.FC = () => {
   const [progress, setProgress] = useState(0);
   const [isExiting, setIsExiting] = useState(false);
   const [isDone, setIsDone] = useState(false);
-  const [mounted, setMounted] = useState(false);
+  // False on the server and during hydration, true once on the client.
+  const mounted = useSyncExternalStore(noopSubscribe, () => true, () => false);
   const mountedAt = useRef(0);
 
   useEffect(() => {
     if (!enabled) return;
-    setMounted(true);
     mountedAt.current = Date.now();
 
     // Reduced motion: no staircase travel, a brief static brand hold instead.
