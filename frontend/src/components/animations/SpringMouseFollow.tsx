@@ -1,6 +1,6 @@
 'use client';
 
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, useSyncExternalStore } from 'react';
 import { motion, useMotionValue, useSpring } from 'motion/react';
 import { useAppMotion } from '@/lib/motionPreference';
 
@@ -15,9 +15,20 @@ import { useAppMotion } from '@/lib/motionPreference';
  * The system cursor stays visible; this is purely decorative and
  * `pointer-events-none`.
  */
+const TRACK_QUERIES = ['(pointer: fine)', '(hover: hover)'];
+
+const subscribeTrackQueries = (onChange: () => void) => {
+  const lists = TRACK_QUERIES.map((q) => window.matchMedia(q));
+  lists.forEach((l) => l.addEventListener('change', onChange));
+  return () => lists.forEach((l) => l.removeEventListener('change', onChange));
+};
+
+const getCanTrack = () => TRACK_QUERIES.every((q) => window.matchMedia(q).matches);
+
 export const SpringMouseFollow: React.FC = () => {
   const fullMotion = useAppMotion();
-  const [canTrack, setCanTrack] = useState(false);
+  // Only fine, hover-capable pointers get the follower; false during SSR.
+  const canTrack = useSyncExternalStore(subscribeTrackQueries, getCanTrack, () => false);
   const [isVisible, setIsVisible] = useState(false);
   const [isPressed, setIsPressed] = useState(false);
 
@@ -32,12 +43,6 @@ export const SpringMouseFollow: React.FC = () => {
   // Loose spring: ambient lime aura trails behind.
   const auraX = useSpring(rawX, { stiffness: 90, damping: 18, mass: 0.9 });
   const auraY = useSpring(rawY, { stiffness: 90, damping: 18, mass: 0.9 });
-
-  useEffect(() => {
-    const hasFinePointer = window.matchMedia('(pointer: fine)').matches;
-    const canHover = window.matchMedia('(hover: hover)').matches;
-    setCanTrack(hasFinePointer && canHover);
-  }, []);
 
   useEffect(() => {
     if (!fullMotion || !canTrack) return;

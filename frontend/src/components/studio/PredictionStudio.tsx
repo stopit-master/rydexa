@@ -172,7 +172,9 @@ export const PredictionStudio: React.FC = () => {
 
   // Run initial prediction on load
   useEffect(() => {
-    handlePredict();
+    // Deferred so state updates happen outside the synchronous effect body.
+    void Promise.resolve().then(() => handlePredict());
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   const applyPreset = (preset: ScenarioPreset) => {
