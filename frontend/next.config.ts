@@ -1,18 +1,12 @@
-import type { NextConfig } from "next";
+﻿import type { NextConfig } from "next";
+
+import path from "path";
 
 const nextConfig: NextConfig = {
-  // Disable development indicators overlay
   devIndicators: false,
-  cacheComponents: true,
-  partialPrefetching: true,
-  turbopack: {
-    rules: {
-      "*.css": {
-        loaders: ["@tailwindcss/turbopack"],
-        as: "*.css",
-      },
-    },
-  },
+  // A parent-level lockfile exists outside this repository. Keep Next's
+  // tracing boundary local so it does not infer the parent directory.
+  outputFileTracingRoot: path.join(__dirname),
 };
 
 export default nextConfig;

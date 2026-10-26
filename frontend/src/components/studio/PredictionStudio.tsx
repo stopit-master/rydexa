@@ -1,6 +1,6 @@
 'use client';
 
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useCallback } from 'react';
 import { motion } from 'motion/react';
 import { predictDemand } from '@/lib/api';
 import { PredictionRequest, PredictionResponse } from '@/lib/types';
@@ -135,11 +135,12 @@ export const PredictionStudio: React.FC = () => {
       }
     };
 
-    requestAnimationFrame(updateCounter);
-  }, [prediction]);
+    const rafId = requestAnimationFrame(updateCounter);
+    return () => cancelAnimationFrame(rafId);
+  }, [prediction, displayedDemand]);
 
   // Execute prediction
-  const handlePredict = async (customParams?: PredictionRequest) => {
+  const handlePredict = useCallback(async (customParams?: PredictionRequest) => {
     setIsLoading(true);
     setErrorMsg(null);
     const startTime = performance.now();
@@ -168,14 +169,16 @@ export const PredictionStudio: React.FC = () => {
     } finally {
       setIsLoading(false);
     }
-  };
+  }, [hour, season, month, weekday, workingday, holiday, weatherCondition, temperatureC, humidityPct, windSpeedKmh]);
 
   // Run initial prediction on load
   useEffect(() => {
-    // Deferred so state updates happen outside the synchronous effect body.
-    void Promise.resolve().then(() => handlePredict());
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
+    // Use setTimeout to defer the initial prediction outside the effect's synchronous phase
+    const initId = setTimeout(() => {
+      handlePredict();
+    }, 0);
+    return () => clearTimeout(initId);
+  }, [handlePredict]);
 
   const applyPreset = (preset: ScenarioPreset) => {
     setHour(preset.params.hour);
